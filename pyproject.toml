@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "kapi"
+version = "0.1.0"
+description = ""
+authors = ["Paul Ogolla <paulotieno2@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+graphene-django = "^3.1.5"
+django-cors-headers = "^4.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
