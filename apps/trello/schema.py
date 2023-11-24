@@ -14,11 +14,11 @@ class TaskType(DjangoObjectType):
         fields = '__all__'
         
 class Query(graphene.ObjectType):
-    all_tasks = graphene.List(TaskType)
+    tasks = graphene.List(TaskType)
     columns = graphene.List(ColumnType)
     column_by_name = graphene.Field(ColumnType, name=graphene.String(required=True))
 
-    def resolve_all_tasks(root, info):
+    def resolve_tasks(root, info):
         return Task.objects.select_related("column").all()
     
     def resolve_columns(root, info):
@@ -99,6 +99,17 @@ class UpdateTask(graphene.Mutation):
         task.column = column
         task.save()
         return UpdateTask(task=task, ok=True)
+
+class DeleteTask(graphene.Mutation):
+    ok = graphene.Boolean()
+    
+    class Arguments:
+        task_id = graphene.ID()
+
+    def mutate(self, info, task_id):
+        task = Task.objects.get(task_id=task_id)
+        task.delete()
+        return DeleteTask(ok=True)
     
 class Mutation(graphene.ObjectType):
     create_column = CreateColumn.Field()
@@ -107,6 +118,6 @@ class Mutation(graphene.ObjectType):
 
     create_task = CreateTask.Field()
     update_task = UpdateTask.Field()
-    # delete_task = DeleteTask.Field()
+    delete_task = DeleteTask.Field()
         
 schema = graphene.Schema(query=Query, mutation=Mutation)
