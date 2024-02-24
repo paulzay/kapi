@@ -11,8 +11,9 @@
 - Create Tasks in each Column
 - Update Tasks
 - Delete Tasks
+- Drag and drop
   
-## How To Use 🔧
+## How To Use 🔧raga
 
 From your command line, clone the project:
 
